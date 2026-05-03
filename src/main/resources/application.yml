@@ -5,7 +5,19 @@ spring:
     password: booking_pass
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
   data:
     redis:
       host: localhost
       port: 6379
+
+server:
+  port: 8082
