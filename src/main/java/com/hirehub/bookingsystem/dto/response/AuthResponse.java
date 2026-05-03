@@ -1,17 +1,14 @@
 package com.hirehub.bookingsystem.dto.response;
 
-
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 @Builder
-public class UserResponse {
-    private Long id;
-    private String firstName;
-    private String lastName;
+@AllArgsConstructor
+public class AuthResponse {
+    private String token;
     private String email;
     private String role;
 }
