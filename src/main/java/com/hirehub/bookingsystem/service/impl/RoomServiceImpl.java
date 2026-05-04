@@ -3,6 +3,8 @@ package com.hirehub.bookingsystem.service.impl;
 import com.hirehub.bookingsystem.dto.request.RoomRequest;
 import com.hirehub.bookingsystem.dto.response.RoomResponse;
 import com.hirehub.bookingsystem.entities.Room;
+import com.hirehub.bookingsystem.exception.ConflictException;
+import com.hirehub.bookingsystem.exception.ResourceNotFoundException;
 import com.hirehub.bookingsystem.mappers.RoomMapper;
 import com.hirehub.bookingsystem.repositories.RoomRepository;
 import com.hirehub.bookingsystem.service.RoomService;

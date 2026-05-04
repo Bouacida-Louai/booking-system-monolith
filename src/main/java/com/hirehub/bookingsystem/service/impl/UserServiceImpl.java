@@ -4,15 +4,19 @@ import com.hirehub.bookingsystem.dto.request.RegisterRequest;
 import com.hirehub.bookingsystem.dto.response.UserResponse;
 import com.hirehub.bookingsystem.entities.User;
 import com.hirehub.bookingsystem.enums.Role;
+import com.hirehub.bookingsystem.exception.ResourceNotFoundException;
 import com.hirehub.bookingsystem.mappers.UserMapper;
 import com.hirehub.bookingsystem.repositories.UserRepository;
 import com.hirehub.bookingsystem.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.connection.RedisSubscribedConnectionException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
+@Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -42,14 +46,14 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserResponse findByEmail(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
+                .orElseThrow(() -> new RedisSubscribedConnectionException("User not found: " + email));
         return userMapper.toResponse(user);
     }
 
     // Package-private helper reused by other services
     public User getUserById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + id));
     }
 
 }
