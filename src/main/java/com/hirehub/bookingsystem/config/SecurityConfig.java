@@ -46,7 +46,12 @@ public class SecurityConfig {
 
                         // ── Public endpoints ──────────────────────────────────
                         .requestMatchers(
-                                "/api/v1/auth/**"
+                                "/api/v1/auth/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/api-docs/**",
+                                "/api-docs.yaml"
+
                         ).permitAll()
 
                         // ── Admin only ────────────────────────────────────────

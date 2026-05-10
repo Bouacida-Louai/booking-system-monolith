@@ -8,6 +8,8 @@ import com.hirehub.bookingsystem.security.CurrentUser;
 import com.hirehub.bookingsystem.security.UserPrincipal;
 import com.hirehub.bookingsystem.service.BookingService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/bookings")
 @RequiredArgsConstructor
+@Tag(name = "Bookings", description = "Booking management")
+@SecurityRequirement(name = "bearerAuth")
+
+
 public class BookingController {
 
     private final BookingService bookingService;
@@ -61,7 +67,7 @@ public class BookingController {
             @CurrentUser UserPrincipal currentUser) {
 
         return ResponseEntity.ok(
-                bookingService.cancelBooking(id, currentUser.getId())
+                bookingService.cancelBooking(id, currentUser) // ← pass full principal
         );
     }
 

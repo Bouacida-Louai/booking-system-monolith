@@ -4,6 +4,8 @@ package com.hirehub.bookingsystem.controllers;
 import com.hirehub.bookingsystem.dto.request.RestaurantTableRequest;
 import com.hirehub.bookingsystem.dto.response.RestaurantTableResponse;
 import com.hirehub.bookingsystem.service.RestaurantTableService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/tables")
 @RequiredArgsConstructor
+@Tag(name = "Tables", description = "Table management")
+@SecurityRequirement(name = "bearerAuth")
+
+
 public class RestaurantTableController {
 
     private final RestaurantTableService tableService;

@@ -6,6 +6,7 @@ import com.hirehub.bookingsystem.dto.response.AuthResponse;
 import com.hirehub.bookingsystem.dto.response.UserResponse;
 import com.hirehub.bookingsystem.security.JwtUtil;
 import com.hirehub.bookingsystem.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+@Tag(name = "Auth", description = "Register and Login")
+
 public class AuthController {
 
     private final UserService userService;

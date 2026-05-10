@@ -17,6 +17,7 @@ import com.hirehub.bookingsystem.repositories.BookingRepository;
 import com.hirehub.bookingsystem.repositories.RestaurantTableRepository;
 import com.hirehub.bookingsystem.repositories.RoomRepository;
 import com.hirehub.bookingsystem.repositories.UserRepository;
+import com.hirehub.bookingsystem.security.UserPrincipal;
 import com.hirehub.bookingsystem.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -144,12 +145,15 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional
-    public BookingResponse cancelBooking(Long bookingId, Long userId) {
+    public BookingResponse cancelBooking(Long bookingId, UserPrincipal currentUser) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking not found: " + bookingId));
 
-        // Ownership check — only the owner or admin can cancel
-        if (!booking.getUser().getId().equals(userId)) {
+        // Admin can cancel any booking — customer can only cancel their own
+        boolean isAdmin = currentUser.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!isAdmin && !booking.getUser().getId().equals(currentUser.getId())) {
             throw new BusinessException("You are not authorized to cancel this booking");
         }
 
@@ -160,7 +164,6 @@ public class BookingServiceImpl implements BookingService {
         booking.setStatus(BookingStatus.CANCELLED);
         return bookingMapper.toResponse(bookingRepository.save(booking));
     }
-
     // ── Queries ──────────────────────────────────────────────────────────────
 
     @Override

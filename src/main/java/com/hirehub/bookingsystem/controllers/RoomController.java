@@ -3,6 +3,8 @@ package com.hirehub.bookingsystem.controllers;
 import com.hirehub.bookingsystem.dto.request.RoomRequest;
 import com.hirehub.bookingsystem.dto.response.RoomResponse;
 import com.hirehub.bookingsystem.service.RoomService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/rooms")
 @RequiredArgsConstructor
+@Tag(name = "Rooms", description = "Room management")
+@SecurityRequirement(name = "bearerAuth")
+
 public class RoomController {
 
     private final RoomService roomService;
